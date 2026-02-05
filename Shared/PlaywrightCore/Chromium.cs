@@ -63,7 +63,7 @@ namespace Shared.PlaywrightCore
                             case Architecture.X64:
                             case Architecture.Arm64:
                                 {
-                                    string uri = $"https://github.com/immisterio/playwright/releases/download/chrome/chrome-win-{RuntimeInformation.ProcessArchitecture.ToString().ToLower()}.zip";
+                                    string uri = $"{baseDownloadUrl}/chrome-win-{RuntimeInformation.ProcessArchitecture.ToString().ToLower()}.zip";
                                     bool res = await DownloadFile(uri, ".playwright/chrome.zip");
                                     if (!res)
                                     {
@@ -89,7 +89,7 @@ namespace Shared.PlaywrightCore
                             case Architecture.X64:
                             case Architecture.Arm64:
                                 {
-                                    string uri = $"https://github.com/immisterio/playwright/releases/download/chrome/chrome-mac-{RuntimeInformation.ProcessArchitecture.ToString().ToLower()}.zip";
+                                    string uri = $"{PlaywrightBase.baseDownloadUrl}/chrome-mac-{RuntimeInformation.ProcessArchitecture.ToString().ToLower()}.zip";
                                     bool res = await DownloadFile(uri, ".playwright/chrome.zip");
                                     if (!res)
                                     {
@@ -114,7 +114,7 @@ namespace Shared.PlaywrightCore
                             case Architecture.X86:
                             case Architecture.X64:
                                 {
-                                    string uri = $"https://github.com/immisterio/playwright/releases/download/chrome/chrome-linux-{RuntimeInformation.ProcessArchitecture.ToString().ToLower()}.zip";
+                                    string uri = $"{PlaywrightBase.baseDownloadUrl}/chrome-linux-{RuntimeInformation.ProcessArchitecture.ToString().ToLower()}.zip";
                                     bool res = await DownloadFile(uri, ".playwright/chrome.zip");
                                     if (!res)
                                     {
