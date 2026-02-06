@@ -613,13 +613,13 @@ namespace SISI.Controllers.NextHUB
 
                 return rch?.enable == true
                     ? await rch.Post(url.Replace("{page}", pg.ToString()), data, httpHeaders(init))
-                    : await Http.Post(url.Replace("{page}", pg.ToString()), data, encoding: encodingResponse, headers: httpHeaders(init), proxy: proxy, timeoutSeconds: init.timeout, httpversion: init.httpversion);
+                    : await Http.Post(url.Replace("{page}", pg.ToString()), data, encoding: encodingResponse, headers: httpHeaders(init), proxy: proxy, timeoutSeconds: init.GetHttpTimeout(), httpversion: init.GetHttpVersion());
             }
             else
             {
                 return rch?.enable == true
                     ? await rch.Get(url.Replace("{page}", pg.ToString()), httpHeaders(init)) 
-                    : init.priorityBrowser == "http" ? await Http.Get(url.Replace("{page}", pg.ToString()), encoding: encodingResponse, headers: httpHeaders(init), proxy: proxy, timeoutSeconds: init.timeout, httpversion: init.httpversion) 
+                    : init.priorityBrowser == "http" ? await Http.Get(url.Replace("{page}", pg.ToString()), encoding: encodingResponse, headers: httpHeaders(init), proxy: proxy, timeoutSeconds: init.timeout, httpversion: init.GetHttpVersion()) 
                     : init.list.viewsource ? await PlaywrightBrowser.Get(init, url.Replace("{page}", pg.ToString()), httpHeaders(init), proxy_data, cookies: init.cookies) 
                     : await ContentAsync(init, url.Replace("{page}", pg.ToString()), httpHeaders(init), proxy_data, search, sort, cat, model, pg);
             }

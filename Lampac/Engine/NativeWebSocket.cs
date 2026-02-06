@@ -317,14 +317,18 @@ namespace Lampac.Engine
 
                     if (name == "devices")
                     {
-                        var evc = event_clients.Where(i => i.Value == uid).ToArray();
-
+                        var uidClients = event_clients
+                            .Where(i => i.Value == uid)
+                            .ToDictionary();
+                        
                         var devices = _connections
                             .Where(i => i.Value.ConnectionId != connection.ConnectionId)
-                            .Where(i => i.Value.Ip == connection.Ip || event_clients.Values.Contains(uid))
+                            .Where(i =>
+                                (!AppInit.conf.accsdb.enable && i.Value.Ip == connection.Ip)
+                                || uidClients.Keys.Contains(i.Key))
                             .Select(i => new {
-                                uid = event_clients.TryGetValue(i.Value.ConnectionId, out var _uid) ? _uid : null, 
-                                i.Value.ConnectionId, 
+                                uid = uidClients.TryGetValue(i.Value.ConnectionId, out var targetUid) ? targetUid : null,
+                                i.Value.ConnectionId,
                                 i.Value.RequestInfo.UserAgent
                             })
                             .ToArray();
@@ -517,7 +521,7 @@ namespace Lampac.Engine
             try
             {
                 var now = DateTime.UtcNow;
-                var cutoff = now.AddSeconds(-125); // ping каждые 40 секунд
+                var cutoff = now.AddSeconds(-125);
 
                 foreach (var connection in _connections)
                 {

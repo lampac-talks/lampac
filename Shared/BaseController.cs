@@ -24,10 +24,12 @@ namespace Shared
 {
     public class BaseController : Controller
     {
-        public static string appversion => "154";
 
-        public static string minorversion => "3";
+        public static string versionTag => "ce";
 
+        public static string appversion => "155";
+
+        public static string minorversion => "1";
 
         protected static readonly ConcurrentDictionary<string, SemaphoreSlim> _semaphoreLocks = new();
 

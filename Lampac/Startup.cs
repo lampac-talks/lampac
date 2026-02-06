@@ -639,7 +639,7 @@ namespace Lampac
                 AppInit.conf.BaseModule.EnableControllers.Length == 0)
                 return;
 
-            WebLogEnableController = AppInit.conf.BaseModule.EnableControllers.Contains("WebLogController.cs");
+            WebLogEnableController = AppInit.conf.BaseModule.EnableControllers.Contains("WebLog");
 
             var syntaxTree = new List<SyntaxTree>();
 

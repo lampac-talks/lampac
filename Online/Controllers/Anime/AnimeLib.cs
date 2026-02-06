@@ -364,7 +364,7 @@ namespace Online.Controllers
                 );
 
                 var result = await Http.Post<JObject>("https://api.cdnlibs.org/api/auth/oauth/token", content, 
-                    httpversion: init.httpversion, timeoutSeconds: init.httptimeout, headers: headers, useDefaultHeaders: false
+                    httpversion: init.GetHttpVersion(), timeoutSeconds: init.GetHttpTimeout(), headers: headers, useDefaultHeaders: false
                 );
 
                 if (result == null)
