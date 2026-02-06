@@ -464,7 +464,7 @@ namespace Shared
 
         public SyncUserConf sync_user = new SyncUserConf() { enable = true, version = 2 };
 
-        public StorageConf storage = new StorageConf() { enable = true, max_size = 7_000000, brotli = false, md5name = true };
+        public StorageConf storage = new StorageConf() { enable = true, max_size = 7_000000, brotli = false, };
 
         public GCConf GC { get; set; } = new GCConf() 
         {

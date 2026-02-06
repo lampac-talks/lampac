@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
@@ -19,7 +18,9 @@ namespace Lampac.Controllers
         [HttpGet]
         [AllowAnonymous]
         [Route("/version")]
-        public ActionResult Version() => Content($"{appversion}.{minorversion}");
+        public ActionResult Version() => string.IsNullOrEmpty(versionTag)
+            ? Content($"{appversion}.{minorversion}")
+            : Content($"{appversion}.{minorversion}-{versionTag}");
 
         [HttpGet]
         [AllowAnonymous]

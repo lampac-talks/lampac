@@ -89,7 +89,7 @@ namespace SISI.Controllers.Porntrex
                     }
                     else
                     {
-                        location = await Http.GetLocation(init.cors(link), timeoutSeconds: init.httptimeout, httpversion: init.httpversion, proxy: proxy, headers: headers);
+                        location = await Http.GetLocation(init.cors(link), timeoutSeconds: init.GetHttpTimeout(), httpversion: init.GetHttpVersion(), proxy: proxy, headers: headers);
                     }
 
                     if (string.IsNullOrEmpty(location) || link == location)
