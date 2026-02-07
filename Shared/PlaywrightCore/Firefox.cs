@@ -45,7 +45,7 @@ namespace Shared.PlaywrightCore
                             case Architecture.X64:
                                 {
                                     string camoufox = RuntimeInformation.ProcessArchitecture == Architecture.X64 ? "x86_64" : "i686";
-                                    string uri = $"https://github.com/immisterio/playwright/releases/download/chrome/camoufox-135.0.1-beta.23-win.{camoufox}.zip";
+                                    string uri = $"{baseDownloadUrl}/camoufox-135.0.1-beta.23-win.{camoufox}.zip";
                                     bool res = await DownloadFile(uri, ".playwright/firefox/release.zip", "firefox/");
                                     if (!res)
                                     {
@@ -69,7 +69,7 @@ namespace Shared.PlaywrightCore
                             case Architecture.Arm64:
                                 {
                                     string camoufox = RuntimeInformation.ProcessArchitecture == Architecture.X64 ? "x86_64" : "arm64";
-                                    string uri = $"https://github.com/immisterio/playwright/releases/download/chrome/camoufox-135.0.1-beta.23-mac.{camoufox}.zip";
+                                    string uri = $"{baseDownloadUrl}/camoufox-135.0.1-beta.23-mac.{camoufox}.zip";
                                     bool res = await DownloadFile(uri, ".playwright/camoufox.zip");
                                     if (!res)
                                     {
@@ -109,7 +109,7 @@ namespace Shared.PlaywrightCore
 
                         if (camoufox != null)
                         {
-                            string uri = $"https://github.com/immisterio/playwright/releases/download/chrome/camoufox-135.0.1-beta.23-lin.{camoufox}.zip";
+                            string uri = $"{baseDownloadUrl}/camoufox-135.0.1-beta.23-lin.{camoufox}.zip";
                             bool res = await DownloadFile(uri, ".playwright/camoufox.zip", "firefox/");
                             if (!res)
                             {

@@ -8,6 +8,8 @@ namespace Shared.Engine
     /// </summary>
     public static class FFmpeg
     {
+        private const string baseDownloadUrl = "https://github.com/lampac-talks/lampac/releases/download/ffmpeg";
+
         #region InitializationAsync
         static bool disableInstall = false;
 
@@ -39,7 +41,7 @@ namespace Shared.Engine
                     if (File.Exists($"data/{fileName}.exe"))
                         continue;
 
-                    if (!await Http.DownloadFile($"https://github.com/immisterio/ffmpeg/releases/download/ffmpeg2/{fileName}-win{arh}-gpl.exe", $"data/{fileName}.exe"))
+                    if (!await Http.DownloadFile($"{baseDownloadUrl}/{fileName}-win{arh}-gpl.exe", $"data/{fileName}.exe"))
                         File.Delete($"data/{fileName}.exe");
                 }
 
@@ -76,7 +78,7 @@ namespace Shared.Engine
                             if (File.Exists($"data/{fileName}"))
                                 continue;
 
-                            if (!await Http.DownloadFile($"https://github.com/immisterio/ffmpeg/releases/download/ffmpeg2/{fileName}-linux{arh}-gpl", $"data/{fileName}"))
+                            if (!await Http.DownloadFile($"{baseDownloadUrl}/{fileName}-linux{arh}-gpl", $"data/{fileName}"))
                             {
                                 File.Delete($"data/{fileName}");
                                 continue;

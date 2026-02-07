@@ -68,11 +68,8 @@ namespace Lampac.Controllers
             #region migration storage to sql
             if (AppInit.conf.sync_user.version != 1 && !string.IsNullOrEmpty(requestInfo.user_uid))
             {
-                string profile_id = getProfileid(requestInfo, HttpContext);
-                string id = requestInfo.user_uid + profile_id;
-
-                string md5key = AppInit.conf.storage.md5name ? CrypTo.md5(id) : Regex.Replace(id, "[^a-z0-9\\-]", "");
-                string storageFile = $"database/storage/sync_favorite/{md5key.Substring(0, 2)}/{md5key.Substring(2)}";
+                string profileId = getProfileid(requestInfo, HttpContext);
+                var storageFile = StorageManager.GetFilePath("sync_favorite", false, requestInfo.user_uid, profileId);
 
                 if (System.IO.File.Exists(storageFile) && !System.IO.File.Exists($"{storageFile}.migration"))
                 {

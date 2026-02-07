@@ -51,14 +51,14 @@ namespace Catalog.Controllers
 
                         html = rch.enable
                             ? await rch.Post(url, init.card_parse.postData, headers, useDefaultHeaders: init.useDefaultHeaders)
-                            : await Http.Post(url, httpdata, headers: headers, proxy: proxy.proxy, timeoutSeconds: init.timeout, httpversion: init.httpversion, useDefaultHeaders: init.useDefaultHeaders);
+                            : await Http.Post(url, httpdata, headers: headers, proxy: proxy.proxy, timeoutSeconds: init.timeout, httpversion: init.GetHttpVersion(), useDefaultHeaders: init.useDefaultHeaders);
                     }
                     else
                     {
                         html = rch.enable
                             ? await rch.Get(url, headers, useDefaultHeaders: init.useDefaultHeaders)
                             : init.priorityBrowser == "playwright" ? await PlaywrightBrowser.Get(init, url, headers, proxy.data, cookies: init.cookies)
-                            : await Http.Get(url, headers: headers, proxy: proxy.proxy, timeoutSeconds: init.timeout, httpversion: init.httpversion, useDefaultHeaders: init.useDefaultHeaders);
+                            : await Http.Get(url, headers: headers, proxy: proxy.proxy, timeoutSeconds: init.timeout, httpversion: init.GetHttpVersion(), useDefaultHeaders: init.useDefaultHeaders);
                     }
 
                     if (html == null)
