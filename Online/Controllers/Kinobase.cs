@@ -139,7 +139,7 @@ namespace Online.Controllers
                     });
 
                     PlaywrightBase.GotoAsync(page, uri);
-                    await browser.WaitForAnySelectorAsync(page, "#playerjsfile", ".uppod-media", ".alert").ConfigureAwait(false);
+                    await browser.WaitForAnySelectorAsync(page, "#playerjsfile", "[id^='playerjsfile']", ".uppod-media", ".alert").ConfigureAwait(false);
 
                     string content = await page.ContentAsync().ConfigureAwait(false);
 
