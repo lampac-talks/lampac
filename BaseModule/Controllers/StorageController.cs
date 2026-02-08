@@ -154,8 +154,10 @@ namespace Lampac.Controllers
                     {
                         await semaphore.WaitAsync();
 
-                        await using var fileStream = new FileStream(outFile, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None, PoolInvk.bufferSize);
-                        await memoryStream.CopyToAsync(fileStream, PoolInvk.bufferSize);
+                        using (var fileStream = new FileStream(outFile, FileMode.Create, FileAccess.Write, FileShare.None, PoolInvk.bufferSize))
+                        {
+                            await memoryStream.CopyToAsync(fileStream, PoolInvk.bufferSize);
+                        }
                     }
                     catch
                     {
