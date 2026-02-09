@@ -192,11 +192,17 @@ namespace Lampac
             #endregion
 
             #region vers.txt
+            Directory.CreateDirectory("data");
+
             if (!File.Exists("data/vers.txt"))
                 File.WriteAllText("data/vers.txt", BaseController.appversion);
 
             if (!File.Exists("data/vers-minor.txt"))
-                File.WriteAllText("data/vers-minor.txt", "1");
+                File.WriteAllText("data/vers-minor.txt", BaseController.minorversion);
+
+            if (!string.IsNullOrEmpty(BaseController.versionTag) && !File.Exists("data/vers-tag.txt"))
+                File.WriteAllText("data/vers-tag.txt", BaseController.versionTag);
+
             #endregion
 
             #region SQL
@@ -421,6 +427,7 @@ namespace Lampac
             if (AppInit.modules?.FirstOrDefault(i => i.dll == "DLNA.dll" && i.enable) != null)
                 TrackersCron.Run();
 
+            Directory.CreateDirectory("wwwroot");
             LampaCron.Run();
 
             appReload = new AppReload();

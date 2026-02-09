@@ -21,7 +21,7 @@ namespace SISI.Controllers.XvideosRED
                     if (url == null)
                         return OnError("stream_links");
 
-                    string html = await Http.Get(url, cookie: init.cookie, timeoutSeconds: init.httptimeout, proxy: proxy, headers: httpHeaders(init));
+                    string html = await Http.Get(url, cookie: init.cookie, timeoutSeconds: init.GetHttpVersion(), httpversion: init.GetHttpVersion(), proxy: proxy, headers: httpHeaders(init));
                     if (html == null)
                         return OnError("stream_links");
 

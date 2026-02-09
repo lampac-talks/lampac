@@ -119,7 +119,7 @@ namespace Online.Controllers
                         }
                         else if (init.priorityBrowser == "http")
                         {
-                            location = await Http.GetLocation(link, httpversion: init.httpversion, timeoutSeconds: init.httptimeout, proxy: proxy, headers: headers);
+                            location = await Http.GetLocation(link, httpversion: init.GetHttpVersion(), timeoutSeconds: init.GetHttpTimeout(), proxy: proxy, headers: headers);
                         }
                         else
                         {

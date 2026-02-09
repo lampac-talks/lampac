@@ -27,7 +27,7 @@ namespace Online.Controllers
         async public Task<ActionResult> Pro()
         {
             string uri = $"{init.corsHost()}/api/v2/token_request?user_dev_apk=2.0.1&user_dev_id=&user_dev_name=Xiaomi&user_dev_os=11&user_dev_vendor=Xiaomi&user_dev_token=";
-            var token_request = await Http.Get<JObject>(uri, httpversion: init.httpversion, proxy: proxy, useDefaultHeaders: false);
+            var token_request = await Http.Get<JObject>(uri, httpversion: init.GetHttpVersion(), timeoutSeconds: init.GetHttpTimeout(), proxy: proxy, useDefaultHeaders: false);
 
             if (token_request == null)
                 return ContentTo($"нет доступа к {init.corsHost()}");

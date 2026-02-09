@@ -122,7 +122,7 @@ namespace Online.Controllers
                 else
                 {
                     var rtk = await Http.Get<JObject>($"{init.corsHost()}/api-fx/request-token",
-                        proxy: proxy, httpversion: init.httpversion, timeoutSeconds: 30
+                        proxy: proxy, httpversion: init.GetHttpVersion(), timeoutSeconds: 30
                     );
 
                     if (rtk == null || !rtk.ContainsKey("token"))
@@ -146,14 +146,14 @@ namespace Online.Controllers
                         string refreshToken = Regex.Match(F.ReadAllText(authFile), "\"refreshToken\": ?\"([^\"]+)\"").Groups[1].Value;
 
                         root_auth = await Http.Get<JObject>($"{init.corsHost()}/api-fx/refresh?refreshToken={HttpUtility.UrlEncode(refreshToken)}",
-                            proxy: proxy, headers: HeadersModel.Init("hash", init.hash_apitv), httpversion: init.httpversion, timeoutSeconds: 30
+                            proxy: proxy, headers: HeadersModel.Init("hash", init.hash_apitv), httpversion: init.GetHttpVersion(), timeoutSeconds: 30
                         );
                     }
                     else
                     {
                         var data = new System.Net.Http.StringContent($"{{\"user_name\":\"{init.user_apitv}\",\"user_passw\":\"{init.passwd_apitv}\",\"session\":true}}", Encoding.UTF8, "application/json");
                         root_auth = await Http.Post<JObject>($"{init.corsHost()}/api-fx/auth", data,
-                            proxy: proxy, headers: HeadersModel.Init("hash", init.hash_apitv), httpversion: init.httpversion, timeoutSeconds: 30
+                            proxy: proxy, headers: HeadersModel.Init("hash", init.hash_apitv), httpversion: init.GetHttpVersion(), timeoutSeconds: 30
                         );
                     }
 

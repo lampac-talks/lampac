@@ -28,14 +28,19 @@ namespace Shared.Models.Templates
                     Append(item.link, item.quality);
             }
         }
+				void EnsureData()
+        {
+            data ??= new List<StreamQualityDto>(8);
+        }
 
-
-        public bool Any() => data.Any();
+        public bool Any() => data != null && data.Any();
 
         public void Append(string link, string quality)
         {
             if (string.IsNullOrEmpty(link) || string.IsNullOrEmpty(quality))
                 return;
+			
+			EnsureData();
 
             if (InvkEvent.IsStreamQuality())
             {
@@ -54,6 +59,8 @@ namespace Shared.Models.Templates
         {
             if (string.IsNullOrEmpty(link) || string.IsNullOrEmpty(quality))
                 return;
+			
+			EnsureData();
 
             if (InvkEvent.IsStreamQuality())
             {
@@ -72,6 +79,8 @@ namespace Shared.Models.Templates
 
         public Dictionary<string, string> ToObject(bool emptyToNull = false)
         {
+			EnsureData();
+			
             if (emptyToNull && data.Count == 0)
                 return null;
 
@@ -85,6 +94,8 @@ namespace Shared.Models.Templates
 
         public string MaxQuality()
         {
+			EnsureData();
+			
             if (data.Count == 0)
                 return string.Empty;
 
@@ -93,6 +104,8 @@ namespace Shared.Models.Templates
 
         public StreamQualityDto Firts()
         {
+			EnsureData();
+			
             if (data.Count == 0)
                 return default;
 

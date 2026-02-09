@@ -168,7 +168,7 @@ namespace Online.Controllers
                     string uri = $"{init.host}/v1/api/media/{(serial == 1 ? "serials" : "movies")}";
                     var data = new System.Net.Http.StringContent(JsonConvert.SerializeObject(new { search }), Encoding.UTF8, "application/json");
 
-                    var video = await Http.Get<JObject>(uri, body: data, timeoutSeconds: init.httptimeout, proxy: proxy, useDefaultHeaders: false, headers: httpHeaders(init, HeadersModel.Init(
+                    var video = await Http.Get<JObject>(uri, body: data, timeoutSeconds: init.GetHttpTimeout(), httpversion: init.GetHttpVersion(), proxy: proxy, useDefaultHeaders: false, headers: httpHeaders(init, HeadersModel.Init(
                         ("X-API-AUTH", codeauth),
                         ("X-API-ID", init.token.Split(":")[0])
                     )));

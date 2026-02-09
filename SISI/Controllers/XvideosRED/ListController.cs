@@ -45,7 +45,7 @@ namespace SISI.Controllers.XvideosRED
                     }
                     #endregion
 
-                    string html = await Http.Get(init.cors(url), cookie: init.cookie, timeoutSeconds: init.httptimeout, proxy: proxy, headers: httpHeaders(init));
+                    string html = await Http.Get(init.cors(url), cookie: init.cookie, timeoutSeconds: init.GetHttpVersion(), httpversion: init.GetHttpVersion(), proxy: proxy, headers: httpHeaders(init));
                     if (html == null)
                         return OnError("html", refresh_proxy: string.IsNullOrEmpty(search));
 
