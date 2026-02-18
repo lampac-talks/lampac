@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -9,7 +8,6 @@ using Shared.Engine.Utilities;
 using System;
 using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using IO = System.IO;
@@ -18,14 +16,6 @@ namespace Lampac.Controllers
 {
     public class StorageController : BaseController
     {
-        #region StorageController
-        static StorageController()
-        {
-            Directory.CreateDirectory("database/storage");
-            Directory.CreateDirectory("database/storage/temp");
-        }
-        #endregion
-
         #region backup.js
         [HttpGet]
         [AllowAnonymous]
@@ -83,7 +73,7 @@ namespace Lampac.Controllers
             if (!AppInit.conf.storage.enable)
                 return ContentTo("{\"success\": false, \"msg\": \"disabled\"}");
 
-            string outFile = getFilePath(path, pathfile, false);
+            string outFile = StorageManager.GetFilePath(path, false, requestInfo, pathfile);
             if (outFile == null || !IO.File.Exists(outFile))
                 return ContentTo("{\"success\": false, \"msg\": \"outFile\"}");
 
@@ -135,7 +125,7 @@ namespace Lampac.Controllers
             if (HttpContext.Request.ContentLength > AppInit.conf.storage.max_size)
                 return ContentTo("{\"success\": false, \"msg\": \"max_size\"}");
 
-            string outFile = getFilePath(path, pathfile, true);
+            string outFile = StorageManager.GetFilePath(path, true, requestInfo, pathfile);
             if (outFile == null)
                 return ContentTo("{\"success\": false, \"msg\": \"outFile\"}");
 
@@ -165,7 +155,9 @@ namespace Lampac.Controllers
                         await semaphore.WaitAsync();
 
                         using (var fileStream = new FileStream(outFile, FileMode.Create, FileAccess.Write, FileShare.None, PoolInvk.bufferSize))
+                        {
                             await memoryStream.CopyToAsync(fileStream, PoolInvk.bufferSize);
+                        }
                     }
                     catch
                     {
@@ -216,7 +208,7 @@ namespace Lampac.Controllers
             if (!AppInit.conf.storage.enable)
                 return ContentTo("{\"success\": false, \"msg\": \"disabled\"}");
 
-            string outFile = getFilePath("temp", null, false, user_uid: key);
+            string outFile = StorageManager.GetFilePath("temp", false, key);
             if (outFile == null || !IO.File.Exists(outFile))
                 return ContentTo("{\"success\": false, \"msg\": \"outFile\"}");
 
@@ -268,7 +260,7 @@ namespace Lampac.Controllers
             if (HttpContext.Request.ContentLength > AppInit.conf.storage.max_size)
                 return ContentTo("{\"success\": false, \"msg\": \"max_size\"}");
 
-            string outFile = getFilePath("temp", null, true, user_uid: key);
+            string outFile = StorageManager.GetFilePath("temp", true, key);
             if (outFile == null)
                 return ContentTo("{\"success\": false, \"msg\": \"outFile\"}");
 
@@ -320,36 +312,6 @@ namespace Lampac.Controllers
                 uid = requestInfo.user_uid,
                 fileInfo = new { inf.Name, path = outFile, inf.Length, changeTime = new DateTimeOffset(inf.LastWriteTimeUtc).ToUnixTimeMilliseconds() }
             });
-        }
-        #endregion
-
-
-        #region getFilePath
-        string getFilePath(string path, string pathfile, bool createDirectory, string user_uid = null)
-        {
-            if (path == "temp" && string.IsNullOrEmpty(user_uid))
-                return null;
-
-            path = Regex.Replace(path, "[^a-z0-9\\-]", "", RegexOptions.IgnoreCase);
-
-            string id = user_uid ?? requestInfo.user_uid;
-            if (string.IsNullOrEmpty(id))
-                return null;
-
-            id += pathfile;
-            string md5key = AppInit.conf.storage.md5name ? CrypTo.md5(id) : Regex.Replace(id, "[^a-z0-9\\-]", "");
-
-            if (path == "temp")
-            {
-                return $"database/storage/{path}/{md5key}";
-            }
-            else
-            {
-                if (createDirectory)
-                    Directory.CreateDirectory($"database/storage/{path}/{md5key.Substring(0, 2)}");
-
-                return $"database/storage/{path}/{md5key.Substring(0, 2)}/{md5key.Substring(2)}";
-            }
         }
         #endregion
     }

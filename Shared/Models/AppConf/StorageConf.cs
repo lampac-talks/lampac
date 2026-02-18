@@ -7,7 +7,5 @@
         public long max_size { get; set; }
 
         public bool brotli { get; set; }
-
-        public bool md5name { get; set; }
     }
 }

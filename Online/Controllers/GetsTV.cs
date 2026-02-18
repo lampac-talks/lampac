@@ -33,7 +33,7 @@ namespace Online.Controllers
             else
             {
                 var postdata = new System.Net.Http.StringContent($"{{\"email\":\"{login}\",\"password\":\"{pass}\",\"fingerprint\":\"{CrypTo.md5(DateTime.Now.ToString())}\",\"device\":{{}}}}", Encoding.UTF8, "application/json");
-                var result =  await Http.Post<JObject>($"{init.corsHost()}/api/login", postdata, httpversion: init.httpversion, proxy: proxy, headers: httpHeaders(init));
+                var result =  await Http.Post<JObject>($"{init.corsHost()}/api/login", postdata, httpversion: init.GetHttpVersion(), proxy: proxy, headers: httpHeaders(init));
 
                 if (result == null)
                     return ContentTo("Ошибка авторизации ;(");

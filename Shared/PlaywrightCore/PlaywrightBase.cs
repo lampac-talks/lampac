@@ -21,6 +21,8 @@ namespace Shared.PlaywrightCore
 
     public class PlaywrightBase
     {
+        protected const string baseDownloadUrl = "https://github.com/lampac-talks/lampac/releases/download/browsers";
+
         static DateTime _nextClearDb = default;
 
         public TaskCompletionSource<string> completionSource { get; private set; } = new TaskCompletionSource<string>();
@@ -55,7 +57,7 @@ namespace Shared.PlaywrightCore
 
                 if (!File.Exists(".playwright/package/index.js"))
                 {
-                    bool res = await DownloadFile("https://github.com/immisterio/playwright/releases/download/chrome/package.zip", ".playwright/package.zip");
+                    bool res = await DownloadFile($"{baseDownloadUrl}/package.zip", ".playwright/package.zip");
                     if (!res)
                     {
                         Console.WriteLine("Playwright: error download package.zip");
@@ -72,7 +74,7 @@ namespace Shared.PlaywrightCore
                         case Architecture.Arm64:
                             {
                                 string arc = RuntimeInformation.ProcessArchitecture.ToString().ToLower();
-                                bool res = await DownloadFile($"https://github.com/immisterio/playwright/releases/download/chrome/node-win-{arc}.exe", $".playwright\\node\\win32_{arc}\\node.exe");
+                                bool res = await DownloadFile($"{baseDownloadUrl}/node-win-{arc}.exe", $".playwright\\node\\win32_{arc}\\node.exe");
                                 if (!res)
                                 {
                                     Console.WriteLine($"Playwright: error download node-win-{arc}.exe");
@@ -93,7 +95,7 @@ namespace Shared.PlaywrightCore
                         case Architecture.Arm64:
                             {
                                 string arc = RuntimeInformation.ProcessArchitecture.ToString().ToLower();
-                                bool res = await DownloadFile($"https://github.com/immisterio/playwright/releases/download/chrome/node-mac-{arc}", $".playwright/node/mac-{arc}/node");
+                                bool res = await DownloadFile($"{baseDownloadUrl}/node-mac-{arc}", $".playwright/node/mac-{arc}/node");
                                 if (!res)
                                 {
                                     Console.WriteLine($"Playwright: error download node-mac-{arc}");
@@ -118,7 +120,7 @@ namespace Shared.PlaywrightCore
                         case Architecture.Arm64:
                             {
                                 string arc = RuntimeInformation.ProcessArchitecture.ToString().ToLower();
-                                bool res = await DownloadFile($"https://github.com/immisterio/playwright/releases/download/chrome/node-linux-{arc}", $".playwright/node/linux-{arc}/node");
+                                bool res = await DownloadFile($"{baseDownloadUrl}/node-linux-{arc}", $".playwright/node/linux-{arc}/node");
                                 if (!res)
                                 {
                                     Console.WriteLine($"Playwright: error download node-linux-{arc}");
@@ -131,7 +133,7 @@ namespace Shared.PlaywrightCore
                             }
                         case Architecture.Arm:
                             {
-                                bool res = await DownloadFile("https://github.com/immisterio/playwright/releases/download/chrome/node-linux-armv7l", ".playwright/node/linux-arm/node");
+                                bool res = await DownloadFile($"{baseDownloadUrl}/node-linux-armv7l", ".playwright/node/linux-arm/node");
                                 if (!res)
                                 {
                                     Console.WriteLine("Playwright: error download node-linux-armv7l");

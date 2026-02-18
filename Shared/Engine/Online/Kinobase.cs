@@ -45,7 +45,7 @@ namespace Shared.Engine.Online
 
             string link = null;
 
-            var rx = Rx.Split("<li class=\"item\">", content, 1);
+            var rx = Rx.Matches("<li class=\"[^\"]*\\bitem\\b[^\"]*\">.*?</li>", content, 0, RegexOptions.CultureInvariant | RegexOptions.Singleline);
 
             var similar = new SimilarTpl(rx.Count);
 
@@ -56,7 +56,7 @@ namespace Shared.Engine.Online
 
                 string name = row.Match("<div class=\"title\"><[^>]+>([^<]+)");
                 string _year = row.Match("<span class=\"year\">([0-9]+)");
-                string img = row.Match("<img src=\"/([^\"]+)\"");
+                string img = row.Match("<img[^>]+(?:data-src|src)=\"/([^\"]+)\"");
                 if (!string.IsNullOrEmpty(img))
                     img = $"{apihost}/{img}";
 
@@ -108,7 +108,7 @@ namespace Shared.Engine.Online
             {
                 try
                 {
-                    string video = Regex.Match(news, "id=\"playerjsfile\">([^<]+)<").Groups[1].Value;
+                    string video = Regex.Match(news, "id=\"playerjsfile[^\"]*\">([^<]+)<").Groups[1].Value;
                     if (string.IsNullOrEmpty(video))
                     {
                         if (news.Contains("<div class=\"alert\""))

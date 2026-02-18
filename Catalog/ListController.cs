@@ -99,14 +99,14 @@ namespace Catalog.Controllers
 
                         html = rch.enable
                             ? await rch.Post(url.Replace("{page}", page.ToString()), data, headers, useDefaultHeaders: init.useDefaultHeaders)
-                            : await Http.Post(url.Replace("{page}", page.ToString()), httpdata, headers: headers, proxy: proxy.proxy, timeoutSeconds: init.timeout, httpversion: init.httpversion, useDefaultHeaders: init.useDefaultHeaders);
+                            : await Http.Post(url.Replace("{page}", page.ToString()), httpdata, headers: headers, proxy: proxy.proxy, timeoutSeconds: init.timeout, httpversion: init.GetHttpVersion(), useDefaultHeaders: init.useDefaultHeaders);
                     }
                     else
                     {
                         html = rch.enable
                             ? await rch.Get(url.Replace("{page}", page.ToString()), headers, useDefaultHeaders: init.useDefaultHeaders)
                             : init.priorityBrowser == "playwright" ? await PlaywrightBrowser.Get(init, url.Replace("{page}", page.ToString()), headers, proxy.data, cookies: init.cookies)
-                            : await Http.Get(url.Replace("{page}", page.ToString()), headers: headers, proxy: proxy.proxy, timeoutSeconds: init.timeout, httpversion: init.httpversion, useDefaultHeaders: init.useDefaultHeaders);
+                            : await Http.Get(url.Replace("{page}", page.ToString()), headers: headers, proxy: proxy.proxy, timeoutSeconds: init.timeout, httpversion: init.GetHttpVersion(), useDefaultHeaders: init.useDefaultHeaders);
                     }
                     #endregion
 

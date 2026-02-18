@@ -27,7 +27,7 @@ namespace Shared.Engine
 
             return IsRchEnable(safety)
                 ? rch.Get<T>(init.cors(url), headers, IgnoreDeserializeObject, useDefaultHeaders)
-                : Http.Get<T>(init.cors(url), timeoutSeconds: init.httptimeout, httpversion: init.httpversion, proxy: proxy, headers: headers, useDefaultHeaders: useDefaultHeaders, statusCodeOK: statusCodeOK);
+                : Http.Get<T>(init.cors(url), timeoutSeconds: init.GetHttpTimeout(), httpversion: init.GetHttpVersion(), proxy: proxy, headers: headers, useDefaultHeaders: useDefaultHeaders, statusCodeOK: statusCodeOK);
         }
 
         public Task<string> Get(string url, List<HeadersModel> addheaders = null, List<HeadersModel> newheaders = null, bool useDefaultHeaders = true, bool statusCodeOK = true, Encoding encoding = default, bool safety = false)
@@ -36,7 +36,7 @@ namespace Shared.Engine
 
             return IsRchEnable(safety)
                 ? rch.Get(init.cors(url), headers, useDefaultHeaders)
-                : Http.Get(init.cors(url), encoding, timeoutSeconds: init.httptimeout, httpversion: init.httpversion, proxy: proxy, headers: headers, useDefaultHeaders: useDefaultHeaders, statusCodeOK: statusCodeOK);
+                : Http.Get(init.cors(url), encoding, timeoutSeconds: init.GetHttpTimeout(), httpversion: init.GetHttpVersion(), proxy: proxy, headers: headers, useDefaultHeaders: useDefaultHeaders, statusCodeOK: statusCodeOK);
         }
         #endregion
 
@@ -47,7 +47,7 @@ namespace Shared.Engine
 
             return IsRchEnable(safety)
                 ? rch.GetSpan(spanAction, init.cors(url), headers, useDefaultHeaders)
-                : Http.GetSpan(spanAction, init.cors(url), timeoutSeconds: init.httptimeout, httpversion: init.httpversion, proxy: proxy, headers: headers, useDefaultHeaders: useDefaultHeaders, statusCodeOK: statusCodeOK);
+                : Http.GetSpan(spanAction, init.cors(url), timeoutSeconds: init.GetHttpTimeout(), httpversion: init.GetHttpVersion(), proxy: proxy, headers: headers, useDefaultHeaders: useDefaultHeaders, statusCodeOK: statusCodeOK);
         }
         #endregion
 
@@ -58,7 +58,7 @@ namespace Shared.Engine
 
             return IsRchEnable(safety)
                 ? rch.Post<T>(init.cors(url), data, headers, IgnoreDeserializeObject, useDefaultHeaders)
-                : Http.Post<T>(init.cors(url), data, encoding: encoding, timeoutSeconds: init.httptimeout, httpversion: init.httpversion, proxy: proxy, headers: headers, useDefaultHeaders: useDefaultHeaders, statusCodeOK: statusCodeOK);
+                : Http.Post<T>(init.cors(url), data, encoding: encoding, timeoutSeconds: init.GetHttpTimeout(), httpversion: init.GetHttpVersion(), proxy: proxy, headers: headers, useDefaultHeaders: useDefaultHeaders, statusCodeOK: statusCodeOK);
         }
 
         public Task<string> Post(string url, string data, List<HeadersModel> addheaders = null, List<HeadersModel> newheaders = null, bool useDefaultHeaders = true, bool statusCodeOK = true, Encoding encoding = default, bool safety = false)
@@ -67,7 +67,7 @@ namespace Shared.Engine
 
             return IsRchEnable(safety)
                 ? rch.Post(init.cors(url), data, headers, useDefaultHeaders)
-                : Http.Post(init.cors(url), data, encoding: encoding, timeoutSeconds: init.httptimeout, httpversion: init.httpversion, proxy: proxy, headers: headers, useDefaultHeaders: useDefaultHeaders, statusCodeOK: statusCodeOK);
+                : Http.Post(init.cors(url), data, encoding: encoding, timeoutSeconds: init.GetHttpTimeout(), httpversion: init.GetHttpVersion(), proxy: proxy, headers: headers, useDefaultHeaders: useDefaultHeaders, statusCodeOK: statusCodeOK);
         }
         #endregion
 
@@ -78,7 +78,7 @@ namespace Shared.Engine
 
             return IsRchEnable(safety)
                 ? rch.PostSpan(spanAction, init.cors(url), data, headers, useDefaultHeaders)
-                : Http.PostSpan(spanAction, init.cors(url), data, encoding: encoding, timeoutSeconds: init.httptimeout, httpversion: init.httpversion, proxy: proxy, headers: headers, useDefaultHeaders: useDefaultHeaders, statusCodeOK: statusCodeOK);
+                : Http.PostSpan(spanAction, init.cors(url), data, encoding: encoding, timeoutSeconds: init.GetHttpTimeout(), httpversion: init.GetHttpVersion(), proxy: proxy, headers: headers, useDefaultHeaders: useDefaultHeaders, statusCodeOK: statusCodeOK);
         }
         #endregion
 
